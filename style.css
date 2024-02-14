@@ -3,11 +3,20 @@
   padding: 0;
 }
 header {
-  width: 1500px;
+  width: 1485px;
   height: 300px;
 }
 .hide {
   display: none;
+}
+.details {
+  padding: 130px;
+}
+.character-info {
+  font-family: "Cousine", monospace;
+}
+.homeworld-info {
+  font-family: "Cousine", monospace;
 }
 .header-image {
   width: 100%;
@@ -16,6 +25,8 @@ header {
   background-position: 1%;
   background-size: cover;
   background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
 }
 .character {
   font-family: "Cousine", monospace;
@@ -25,6 +36,8 @@ header {
 .heading {
   color: #fbc63f;
   font-size: 60px;
+  margin-inline: 20px;
+  margin-bottom: 100px;
   font-family: "Cousine", monospace;
 }
 .container {

@@ -1,6 +1,7 @@
 const sectionOne = document.querySelector(".names");
 const hide = document.querySelector(".hide");
-const details = document.querySelector(".details");
+const details = document.querySelector(".information");
+const homeWorld = document.querySelector(".homeworld");
 const currentPageNumber = document.querySelector(".current-page");
 import { fetchCharacters } from "./script.js";
 import { baseURL, leftArrow, rightArrow } from "./index.js";
@@ -13,6 +14,7 @@ export async function addCharactersToDom(characters) {
     .map((character, index) => {
       const characterItem = {
         name: `${character.name}`,
+        homeWorld: `${character.homeworld}`,
       };
       index = index + 1;
       return `
@@ -36,6 +38,9 @@ function fetchOneCharacter(e) {
   fetchCharacters(`${baseURL}/people/${index}`).then((character) => {
     addCharacterToDom(character);
   });
+  fetchCharacters(`${baseURL}/planets/${index}/`).then((homeworld) => {
+    createHomeworldInfoElements(homeworld);
+  })
 }
 
 export function addCharacterToDom(character) {
@@ -51,6 +56,21 @@ export function addCharacterToDom(character) {
   `;
 
   details.innerHTML = characterInfoElements;
+}
+
+
+export function createHomeworldInfoElements(homeworld) {
+  const homeworldInfoElements = /*html*/ `
+  <h3 class="homeworld-info-name">${homeworld.name}</h3>
+  <div class="homeworld-info">Rotation period: ${homeworld.rotation_period} hours</div>
+  <div class="homeworld-info">Orbital period: ${homeworld.orbital_period} days</div>
+  <div class="homeworld-info">Diameter: ${homeworld.diameter} km</div>
+  <div class="homeworld-info">Climate: ${homeworld.climate}</div>
+  <div class="homeworld-info">Gravtity: ${homeworld.gravity} G</div>
+  <div class="homeworld-info">Terrain: ${homeworld.terrain}</div>
+`;
+
+ homeWorld.innerHTML = homeworldInfoElements;
 }
 export function newPage(e) {
   if (e.target === rightArrow && pageIndex <= 8) {
