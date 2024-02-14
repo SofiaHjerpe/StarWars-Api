@@ -1,0 +1,39 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+header {
+  width: 1500px;
+  height: 300px;
+}
+.header-image {
+  width: 100%;
+  height: 100%;
+  background-image: url("earth.jpg");
+  background-position: 1%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.heading {
+  color: #fbc63f;
+  font-size: 60px;
+}
+.container {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  align-items: center;
+  background-color: #eee;
+}
+.section-one {
+  background-color: #b5b5b5;
+  width: 484px;
+  height: 684px;
+  margin-top: -40px;
+}
+.section-two {
+  background-color: #999;
+  width: 484px;
+  height: 684px;
+  margin-top: -40px;
+}
