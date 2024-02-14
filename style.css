@@ -6,6 +6,9 @@ header {
   width: 1500px;
   height: 300px;
 }
+.hide {
+  display: none;
+}
 .header-image {
   width: 100%;
   height: 100%;
@@ -14,8 +17,9 @@ header {
   background-size: cover;
   background-repeat: no-repeat;
 }
-.name {
+.character {
   font-family: "Cousine", monospace;
+  margin-bottom: 10px;
   font-size: 20px;
 }
 .heading {
