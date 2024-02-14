@@ -17,6 +17,7 @@ header {
 .heading {
   color: #fbc63f;
   font-size: 60px;
+  font-family: "Cousine", monospace;
 }
 .container {
   display: flex;
