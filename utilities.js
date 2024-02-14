@@ -7,22 +7,22 @@ let pageNumber = 1;
 
 export async function addCharactersToDom(characters) {
   let getCharactersToDom = characters.results
-    .map((character) => {
+    .map((character, index) => {
       const characterItem = {
         name: `${character.name}`,
-        index: `${character.url}`,
+        index: index,
       };
+      console.log(characterItem.index);
       return `
            <section class="name-row">
-             <h4 class="name"> ${characterItem.name} </h4>
+             <h4 class="name" id="${characterItem.index}"> ${characterItem.name} </h4>
            </section>
-          
            `;
     })
     .join("");
   sectionOne.innerHTML = getCharactersToDom;
   let name = document.querySelector(".name");
-  //  name.addEventListener("click", () => )
+  name.addEventListener("click", (e) => fetchOneCharacter(e));
 }
 
 export function newPage(e) {
@@ -32,7 +32,7 @@ export function newPage(e) {
       addCharactersToDom(characters);
     });
     pageNumber = parseInt(pageIndex);
-    currentPageNumber.innerHTML = `${pageNumber}/ 8 `;
+    currentPageNumber.innerHTML = `${pageNumber} / 8 `;
   } else if (e.target === leftArrow) {
     if (pageIndex === 1) {
       return;
@@ -42,9 +42,20 @@ export function newPage(e) {
         addCharactersToDom(characters);
       });
       pageNumber = parseInt(pageIndex);
-      currentPageNumber.innerHTML = `${pageNumber}/ 8 `;
+      currentPageNumber.innerHTML = `${pageNumber} / 8 `;
     }
   }
 }
 
 
+
+function fetchOneCharacter(e) {
+   let index = e.target.getAttribute("id");
+  fetchCharacters(`https://swapi.dev/api/people/${index}`).then((character) => {
+    addCharacterToDom(character, index);
+  });
+}
+function addCharacterToDom(character, index) {
+  console.log(index);
+  console.log(character);
+}
