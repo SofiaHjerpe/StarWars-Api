@@ -7,3 +7,4 @@ export async function fetchCharacters(url) {
     (error) => console.error("Error:", error);
   }
 }
+

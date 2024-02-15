@@ -1,13 +1,16 @@
-const sectionOne = document.querySelector(".names");
-const hide = document.querySelector(".hide");
-const details = document.querySelector(".information");
-const homeWorld = document.querySelector(".homeworld");
-const currentPageNumber = document.querySelector(".current-page");
 import { fetchCharacters } from "./script.js";
-import { baseURL, leftArrow, rightArrow } from "./index.js";
+export const characterNames = document.querySelector(".names");
 
+const details = document.querySelector(".information");
+const homeWorldElement = document.querySelector(".homeworld");
+
+const currentPageNumber = document.querySelector(".current-page");
+
+export const leftArrow = document.querySelector(".material-symbols-outlined:nth-of-type(1)");
+export const rightArrow = document.querySelector(".material-symbols-outlined:nth-of-type(2)");
 let pageIndex = 1;
 let pageNumber = 1;
+export let displayedCharactersOnPage;
 
 export async function addCharactersToDom(characters) {
   let getCharactersToDom = characters.results
@@ -18,32 +21,14 @@ export async function addCharactersToDom(characters) {
       };
       index = index + 1;
       return `
-           <section class="name-row">
              <h4 class="character" id="${index}"> ${characterItem.name} </h4>
-           </section>
            `;
     })
     .join("");
-  sectionOne.innerHTML = getCharactersToDom;
-  let infoCharacters = document.querySelectorAll(".character");
-  infoCharacters.forEach((character) =>
-    character.addEventListener("click", (e) => fetchOneCharacter(e))
-  );
+  characterNames.innerHTML = getCharactersToDom;
 }
 
-function fetchOneCharacter(e) {
-  hide.classList.remove("hide");
-  let index = e.target.id;
-  console.log(index);
-  fetchCharacters(`${baseURL}/people/${index}`).then((character) => {
-    addCharacterToDom(character);
-  });
-  fetchCharacters(`${baseURL}/planets/${index}/`).then((homeworld) => {
-    createHomeworldInfoElements(homeworld);
-  })
-}
-
-export function addCharacterToDom(character) {
+export function createCharacterInfoElements(character) {
   const characterInfoElements = /*html*/ `
   <h3 class="character-info-name">${character.name}</h3>
   <div class="character-info">Height: ${character.height}</div>
@@ -58,8 +43,8 @@ export function addCharacterToDom(character) {
   details.innerHTML = characterInfoElements;
 }
 
-
 export function createHomeworldInfoElements(homeworld) {
+  console.log(homeWorldElement);
   const homeworldInfoElements = /*html*/ `
   <h3 class="homeworld-info-name">${homeworld.name}</h3>
   <div class="homeworld-info">Rotation period: ${homeworld.rotation_period} hours</div>
@@ -70,13 +55,14 @@ export function createHomeworldInfoElements(homeworld) {
   <div class="homeworld-info">Terrain: ${homeworld.terrain}</div>
 `;
 
- homeWorld.innerHTML = homeworldInfoElements;
+  homeWorldElement.innerHTML = homeworldInfoElements;
 }
 export function newPage(e) {
   if (e.target === rightArrow && pageIndex <= 8) {
     pageIndex++;
     fetchCharacters(`https://swapi.dev/api/people?page=${pageIndex}`).then((characters) => {
       addCharactersToDom(characters);
+       displayedCharactersOnPage = characters.results;
     });
     pageNumber = parseInt(pageIndex);
     currentPageNumber.innerHTML = `${pageNumber} / 8 `;
@@ -87,6 +73,7 @@ export function newPage(e) {
       pageIndex--;
       fetchCharacters(`https://swapi.dev/api/people?page=${pageIndex}`).then((characters) => {
         addCharactersToDom(characters);
+         displayedCharactersOnPage = characters.results;
       });
       pageNumber = parseInt(pageIndex);
       currentPageNumber.innerHTML = `${pageNumber} / 8 `;
