@@ -1,16 +1,17 @@
 import { fetchCharacters } from "./script.js";
 export const characterNames = document.querySelector(".names");
+const loader = document.querySelector(".loader");
 
 const details = document.querySelector(".information");
 const homeWorldElement = document.querySelector(".homeworld");
-
+const baseURL = "https://swapi.dev/api";
 const currentPageNumber = document.querySelector(".current-page");
 
 export const leftArrow = document.querySelector(".material-symbols-outlined:nth-of-type(1)");
 export const rightArrow = document.querySelector(".material-symbols-outlined:nth-of-type(2)");
 let pageIndex = 1;
 let pageNumber = 1;
-export let displayedCharactersOnPage;
+export let displayedCharacters;
 
 export async function addCharactersToDom(characters) {
   let getCharactersToDom = characters.results
@@ -57,13 +58,26 @@ export function createHomeworldInfoElements(homeworld) {
 
   homeWorldElement.innerHTML = homeworldInfoElements;
 }
+export function showLoader() {
+  characterNames.classList.add("hide");
+  loader.style.display = "block";
+}
+export function hideLoader() {
+  characterNames.classList.remove("hide");
+  loader.style.display = "none";
+}
+
+export async function fetchCharacterItem(fetchUrl) {
+  fetchCharacters(fetchUrl).then((characters) => {
+    addCharactersToDom(characters);
+    displayedCharacters = characters.results;
+  });
+}
+fetchCharacterItem(`${baseURL}/people?page=${pageIndex}`);
 export function newPage(e) {
   if (e.target === rightArrow && pageIndex <= 8) {
     pageIndex++;
-    fetchCharacters(`https://swapi.dev/api/people?page=${pageIndex}`).then((characters) => {
-      addCharactersToDom(characters);
-       displayedCharactersOnPage = characters.results;
-    });
+    fetchCharacterItem(`${baseURL}/people?page=${pageIndex}`);
     pageNumber = parseInt(pageIndex);
     currentPageNumber.innerHTML = `${pageNumber} / 8 `;
   } else if (e.target === leftArrow) {
@@ -71,10 +85,7 @@ export function newPage(e) {
       return;
     } else {
       pageIndex--;
-      fetchCharacters(`https://swapi.dev/api/people?page=${pageIndex}`).then((characters) => {
-        addCharactersToDom(characters);
-         displayedCharactersOnPage = characters.results;
-      });
+      fetchCharacterItem(`${baseURL}/people?page=${pageIndex}`);
       pageNumber = parseInt(pageIndex);
       currentPageNumber.innerHTML = `${pageNumber} / 8 `;
     }

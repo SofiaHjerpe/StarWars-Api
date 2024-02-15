@@ -4,15 +4,8 @@ import { newPage } from "./utilities.js";
 import { characterNames } from "./utilities.js";
 import { createHomeworldInfoElements, createCharacterInfoElements } from "./utilities.js";
 import { leftArrow, rightArrow } from "./utilities.js";
-import { displayedCharactersOnPage } from "./utilities.js";
-let pageIndex = 1;
-const baseURL = "https://swapi.dev/api";
-let displayedCharacters;
 
-fetchCharacters(`${baseURL}/people?page=${pageIndex}`).then((characters) => {
-  addCharactersToDom(characters);
-  displayedCharacters = characters.results;
-});
+import { displayedCharacters } from "./utilities.js";
 
 rightArrow.addEventListener("click", (e) => newPage(e));
 leftArrow.addEventListener("click", (e) => newPage(e));
@@ -27,13 +20,11 @@ async function handleOnCharactersClick(event) {
     (character) => event.target.innerText === character.name
   );
 
-  const characterOnOtherPage = displayedCharactersOnPage.find(
-    (character) => event.target.innerText === character.name
-  );
+ 
   console.log(character);
-  console.log(characterOnOtherPage);
+
   if (character === undefined) return;
-  if (characterOnOtherPage === undefined) return;
+
 
   const response = await fetch(character.homeworld);
   const homeworld = await response.json();
