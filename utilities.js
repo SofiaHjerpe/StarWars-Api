@@ -1,6 +1,7 @@
 import { fetchCharacters } from "./script.js";
 export const characterNames = document.querySelector(".names");
 const loader = document.querySelector(".loader");
+const loaderSectionTwo = document.querySelector(".loaderTwo");
 
 const details = document.querySelector(".information");
 const homeWorldElement = document.querySelector(".homeworld");
@@ -66,6 +67,14 @@ export function hideLoader() {
   characterNames.classList.remove("hide");
   loader.style.display = "none";
 }
+export function showLoaderOnSectionTwo() {
+  characterNames.classList.add("hide");
+  loaderSectionTwo.style.display = "block";
+}
+export function hideLoaderOnSectionTwo() {
+  characterNames.classList.remove("hide");
+  loaderSectionTwo.style.display = "none";
+}
 
 export async function fetchCharacterItem(fetchUrl) {
   fetchCharacters(fetchUrl).then((characters) => {
@@ -79,7 +88,7 @@ export function newPage(e) {
     pageIndex++;
     fetchCharacterItem(`${baseURL}/people?page=${pageIndex}`);
     pageNumber = parseInt(pageIndex);
-    currentPageNumber.innerHTML = `${pageNumber} / 8 `;
+    currentPageNumber.innerHTML = `${pageNumber} / 9 `;
   } else if (e.target === leftArrow) {
     if (pageIndex === 1) {
       return;

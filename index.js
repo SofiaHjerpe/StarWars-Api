@@ -1,5 +1,5 @@
-import { fetchCharacters } from "./script.js";
-import { addCharactersToDom } from "./utilities.js";
+
+import { showLoaderOnSectionTwo, hideLoaderOnSectionTwo } from "./utilities.js";
 import { newPage } from "./utilities.js";
 import { characterNames } from "./utilities.js";
 import { createHomeworldInfoElements, createCharacterInfoElements } from "./utilities.js";
@@ -20,15 +20,19 @@ async function handleOnCharactersClick(event) {
     (character) => event.target.innerText === character.name
   );
 
- 
   console.log(character);
 
   if (character === undefined) return;
-
-
-  const response = await fetch(character.homeworld);
-  const homeworld = await response.json();
-  console.log(homeworld);
-  createCharacterInfoElements(character);
-  createHomeworldInfoElements(homeworld);
+  showLoaderOnSectionTwo();
+  try {
+    const response = await fetch(character.homeworld);
+    const homeworld = await response.json();
+    console.log(homeworld);
+    createCharacterInfoElements(character);
+    createHomeworldInfoElements(homeworld);
+  } catch {
+    (error) => console.error("Error:", error);
+  } finally {
+    hideLoaderOnSectionTwo();
+  }
 }
