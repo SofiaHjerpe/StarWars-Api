@@ -1,0 +1,13 @@
+{
+  "folders": [
+	{
+		"path": ".."
+	},
+	{
+		"path": "../../../../../Downloads/exercise-starwars-catalog-main"
+	}
+],
+  "settings": {
+    "liveServer.settings.multiRootWorkspaceName": "Starwars-api"
+  }
+}

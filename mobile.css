@@ -1,0 +1,31 @@
+@media screen and (max-width: 768px) {
+  header {
+    display: block;
+    max-width: 100%;
+  }
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
+  .section-one,
+  .section-two {
+    margin-top: 0;
+    overflow: hidden;
+    display: block;
+    text-align: center;
+  }
+  .nav-api {
+    display: flex;
+    justify-content: center;
+  }
+  .names {
+    margin-top: 50px;
+    text-align: center;
+  }
+  .loader {
+    margin-inline: 40%;
+  }
+  .loaderTwo {
+    margin-inline: 40%;
+  }
+}
